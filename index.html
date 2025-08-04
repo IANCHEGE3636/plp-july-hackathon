@@ -1,90 +1,962 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ian Chege Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="images/favicon.png" type="image/png">
-    
+    <title>Ian Chege - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(12, 12, 12, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid #333;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #00d4ff;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem;
+        }
+
+        .nav-links a:hover {
+            color: #00d4ff;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: #00d4ff;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 80%, rgba(78, 205, 196, 0.1) 0%, transparent 50%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-content {
+            z-index: 2;
+            position: relative;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00d4ff, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { 
+                filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.5));
+                transform: scale(1);
+            }
+            to { 
+                filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.8));
+                transform: scale(1.02);
+            }
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: slideUp 1s ease-out 0.5s both;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 0.9;
+                transform: translateY(0);
+            }
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(45deg, #00d4ff, #0099cc);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3); }
+            50% { box-shadow: 0 4px 25px rgba(0, 212, 255, 0.5); }
+            100% { box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3); }
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.5);
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: #00d4ff;
+            position: relative;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(45deg, #00d4ff, #ff6b6b);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: expandWidth 1s ease-out 0.5s both;
+        }
+
+        @keyframes expandWidth {
+            from { width: 0; }
+            to { width: 50px; }
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: center;
+            animation: slideInLeft 1s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .about-image {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #00d4ff, #ff6b6b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+            margin: 0 auto;
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+            animation: rotate 10s linear infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shine 3s ease-in-out infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes shine {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            animation: fadeIn 1s ease-out 0.5s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            transition: all 0.3s ease;
+            animation: slideInUp 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .skill-category:nth-child(1) { animation-delay: 0.1s; }
+        .skill-category:nth-child(2) { animation-delay: 0.2s; }
+        .skill-category:nth-child(3) { animation-delay: 0.3s; }
+
+        .skill-category:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: rgba(0, 212, 255, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.1);
+        }
+
+        .skill-category h3 {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .skill-item {
+            margin-bottom: 1rem;
+        }
+
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(45deg, #00d4ff, #4ecdc4);
+            border-radius: 4px;
+            animation: fillBar 2s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: shimmer 2s ease-in-out infinite;
+        }
+
+        @keyframes fillBar {
+            from { width: 0; }
+            to { width: var(--width); }
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .skill-progress[data-width="85"] { --width: 85%; }
+        .skill-progress[data-width="80"] { --width: 80%; }
+        .skill-progress[data-width="75"] { --width: 75%; }
+        .skill-progress[data-width="90"] { --width: 90%; }
+        .skill-progress[data-width="70"] { --width: 70%; }
+
+        /* Education Section */
+        .education-item, .interest-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            border-left: 4px solid #00d4ff;
+            transition: all 0.3s ease;
+            animation: slideInRight 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .education-item:nth-child(1) { animation-delay: 0.1s; }
+        .education-item:nth-child(2) { animation-delay: 0.2s; }
+        .interest-item:nth-child(1) { animation-delay: 0.1s; }
+        .interest-item:nth-child(2) { animation-delay: 0.2s; }
+        .interest-item:nth-child(3) { animation-delay: 0.3s; }
+        .interest-item:nth-child(4) { animation-delay: 0.4s; }
+
+        .education-item:hover, .interest-item:hover {
+            transform: translateX(10px) scale(1.02);
+            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.1);
+            border-left-color: #4ecdc4;
+        }
+
+        .education-item h3, .interest-item h3 {
+            color: #00d4ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .education-year {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+
+        /* CV Section */
+        .cv-section {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3rem;
+            border-radius: 15px;
+            margin: 3rem 0;
+            animation: bounceIn 1s ease-out;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .cv-upload-area {
+            border: 2px dashed #00d4ff;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cv-upload-area::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            animation: rotate 4s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .cv-upload-area:hover::before {
+            opacity: 1;
+        }
+
+        .cv-upload-area:hover {
+            background: rgba(0, 212, 255, 0.1);
+            border-color: #4ecdc4;
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .file-input {
+            opacity: 0;
+            position: absolute;
+            z-index: -1;
+        }
+
+        .upload-button, .download-button {
+            background: linear-gradient(45deg, #00d4ff, #0099cc);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0.5rem;
+        }
+
+        .upload-button:hover, .download-button:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3);
+        }
+
+        .download-button {
+            background: linear-gradient(45deg, #ff6b6b, #ff4757);
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .contact-item {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            animation: zoomIn 0.6s ease-out;
+            animation-fill-mode: both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .contact-item:nth-child(1) { animation-delay: 0.1s; }
+        .contact-item:nth-child(2) { animation-delay: 0.2s; }
+        .contact-item:nth-child(3) { animation-delay: 0.3s; }
+        .contact-item:nth-child(4) { animation-delay: 0.4s; }
+
+        .contact-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .contact-item:hover::before {
+            left: 100%;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.1);
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #00d4ff;
+            animation: pulse 2s infinite;
+        }
+
+        .contact-item a {
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            color: #00d4ff;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(12, 12, 12, 0.8);
+            border-top: 1px solid #333;
+            animation: slideUp 1s ease-out;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Mobile Navigation Toggle */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .nav-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #00d4ff;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .nav-toggle {
+                display: flex;
+            }
+        }
+
+        /* Floating particles effect with pure CSS */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #00d4ff;
+            border-radius: 50%;
+            animation: floatParticles 6s ease-in-out infinite;
+        }
+
+        @keyframes floatParticles {
+            0%, 100% { 
+                transform: translateY(0px) translateX(0px) rotate(0deg); 
+                opacity: 1; 
+            }
+            25% { 
+                transform: translateY(-50px) translateX(25px) rotate(90deg); 
+                opacity: 0.8; 
+            }
+            50% { 
+                transform: translateY(-100px) translateX(-25px) rotate(180deg); 
+                opacity: 0.5; 
+            }
+            75% { 
+                transform: translateY(-50px) translateX(-50px) rotate(270deg); 
+                opacity: 0.8; 
+            }
+        }
+
+        .particle:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 20%; top: 80%; animation-delay: 1s; }
+        .particle:nth-child(3) { left: 30%; top: 40%; animation-delay: 2s; }
+        .particle:nth-child(4) { left: 40%; top: 60%; animation-delay: 3s; }
+        .particle:nth-child(5) { left: 50%; top: 10%; animation-delay: 4s; }
+        .particle:nth-child(6) { left: 60%; top: 90%; animation-delay: 5s; }
+        .particle:nth-child(7) { left: 70%; top: 30%; animation-delay: 0.5s; }
+        .particle:nth-child(8) { left: 80%; top: 70%; animation-delay: 1.5s; }
+        .particle:nth-child(9) { left: 90%; top: 50%; animation-delay: 2.5s; }
+    </style>
 </head>
 <body>
-   <header>
-    <h1> Ian Chege</h1>
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <header>
+        <nav>
     
-    <nav>
-       
-            <a href="#Home">Home</a>
-            <a href="#about">About</a>
-            <a href="#skills">Skills</a>
-            <a href="#education">Education</a>
-            <a href="#projects">Projects</a>
-            <a href="#interests">Interests</a>
-            <a href="#contact">Contact</a>
-    </nav>
-   </header>
-   
-    <section id="Home">
-        <div class="hero-container">
-            <div class="hero-content">
-        <h1>Welcome to My Portfolio</h1>    
-        <img src="images/Profile Photo.jpeg" alt="Ian Chege's Profile Picture" class="profile-picture">
-        <p class="tagline">Hi,I'm a IT Student | Front-end Developer | Cybersecurity enthuthiast | DevSecOps Engineer</p>
-        <p>Explore my projects, skills, and interests below.</p>   
-        </section>
+<div class="logo">
+    <img src="images/Favicon.png" alt="Profile Picture" style="width:50px;height:50px;border-radius:50%;object-fit:cover;">
+</div>
+
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Ian Chege</h1>
+            <p class="subtitle">Cybersecurity Enthusiast | Frontend Developer | Mobile Developer</p>
+            <a href="#about" class="cta-button">Explore My Work</a>
+        </div>
+    </section>
 
     <section id="about">
-        <div class = "container">
-     <h2>About Me </h2>
-        <p>A passionate IT student<br>Passionate frontend web developer<br>Cyberscurity enthuthiast<br>Mobile Developer enthuthiast<br>CNC Designer<br>Aspiring DevSecOps Engineer  </p> 
-    </div>
-        </section>
+        <h2>About Me</h2>
+        <div class="about-content">
+            <div class="about-image">
+             <img src="images/Profile Photo.jpeg" alt="Profile Picture" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">
+            </div>
+            <div class="about-text">
+                <p>I'm Ian Chege, a passionate cybersecurity student and developer currently pursuing my degree at KCA University, set to graduate in 2026. My journey in technology spans across multiple domains including cybersecurity, web development, and mobile application development.</p>
+                
+                <p>Currently enhancing my cybersecurity skills through Hack The Box, I combine theoretical knowledge with practical hands-on experience. My interests lie at the intersection of security and development, with a particular focus on DevSecOps practices that integrate security into the development lifecycle.</p>
+                
+                <p>When I'm not coding or studying security protocols, I'm exploring the fascinating world of Artificial Intelligence and its applications in cybersecurity. I believe in continuous learning and staying updated with the latest technological trends.</p>
+            </div>
+        </div>
+    </section>
 
     <section id="skills">
-        <div class="skills-container">
-        <h2>Skills</h2>
-        <div class="grid"></div>
-            <div class="skill-item">
-                <h3>Programming Languages</h3>
-        <ul>
-            <li>HTML</li>
-            <li>CSS</li>
-                    <li>Javascript</li>
-                    <li>C</li>
-            </ul>
-        <h3>Tools and Technologies</h3>
-            <li>Git and GitHub</li>
-            <li>Visual Studio Code</li>
-            <li>Postman</li>
-            <li>Figma</li>
-            <li>Docker</li>
-            <li>AWS</li>
-        </section>
-    <section id="education">
-        <div class = "container">
-        <h2>Education</h2>
-        <h3>Bachelor of Science Information Technology</h3>
-        <p>KCA University | Currently Pursuing</p> 
-        <p><strong>Relevant coursework</strong>: Web Development|Database Management|Java programming|Mobile Development|Network Design and Programming</p>
-        <p>Expected Graduation: 2026</p>
-        <h3>Additional Certifications and Learning </h3>
-        <ul>
-            <li><strong>AWS Educate program</strong>-Cloud Computing Fundamentals</li>
-            <li><strong>Hack The Box Academy</strong>-CyberSecurity and Ethical Hacking </li>   
-        </ul>
+        <h2>Skills & Expertise</h2>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <h3>🔒 Cybersecurity</h3>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Ethical Hacking</span>
+                        <span>85%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="85"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Penetration Testing</span>
+                        <span>80%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="80"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>DevSecOps</span>
+                        <span>75%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="75"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3>💻 Frontend Development</h3>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>HTML/CSS</span>
+                        <span>90%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="90"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>JavaScript</span>
+                        <span>85%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="85"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>React</span>
+                        <span>80%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="80"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3>📱 Mobile Development</h3>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>React Native</span>
+                        <span>80%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="80"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Flutter</span>
+                        <span>75%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="75"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>UI/UX Design</span>
+                        <span>70%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="70"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-       </section>
+    </section>
 
-<section id="contact">
-        <h2>Feel Free to Network with me</h2> 
-               
-        </section>   
-    </div>
+    <section id="education">
+        <h2>Education & Learning</h2>
+        <div class="education-item">
+            <h3>Bachelor's Degree in Cybersecurity</h3>
+            <p><strong>KCA University</strong></p>
+            <p class="education-year">Expected Graduation: 2026</p>
+            <p>Comprehensive cybersecurity program covering network security, ethical hacking, digital forensics, and risk management. Gaining deep knowledge in threat analysis, security architecture, and incident response.</p>
+        </div>
 
-    <footer>                
-        <p>&copy; 2025 Ian Chege. All rights reserved.</p>        
+        <div class="education-item">
+            <h3>Practical Cybersecurity Training</h3>
+            <p><strong>Hack The Box</strong></p>
+            <p class="education-year">Current</p>
+            <p>Hands-on penetration testing and ethical hacking practice through real-world scenarios and challenges. Developing practical skills in vulnerability assessment, exploitation techniques, and security tool usage.</p>
+        </div>
+
+        <h2 style="margin-top: 3rem;">Areas of Interest</h2>
         
+        <div class="interest-item">
+            <h3>🌐 Web Development</h3>
+            <p>Creating secure, responsive, and user-friendly web applications with modern frameworks and best practices. Passionate about frontend technologies, responsive design, and creating intuitive user experiences.</p>
+        </div>
+
+        <div class="interest-item">
+            <h3>🤖 Artificial Intelligence</h3>
+            <p>Exploring AI applications in cybersecurity, including threat detection, automated response systems, and machine learning for security analytics. Interested in how AI can enhance security operations and threat intelligence.</p>
+        </div>
+
+        <div class="interest-item">
+            <h3>🔐 DevSecOps</h3>
+            <p>Integrating security practices into the development and operations lifecycle to build secure applications from the ground up. Focus on automated security testing, secure coding practices, and continuous security monitoring.</p>
+        </div>
+
+        <div class="interest-item">
+            <h3>🛡️ Cybersecurity</h3>
+            <p>Protecting digital assets through ethical hacking, vulnerability assessments, and implementing robust security frameworks. Passionate about network security, incident response, and security architecture design.</p>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Get In Touch</h2>
+        <div class="contact-grid">
+            <div class="contact-item">
+                <div class="contact-icon">📧</div>
+                <h3>Email</h3>
+                <a href="mailto:ichege393@gmail.com">ichege393@gmail.com</a>
+            </div>
+            
+            <div class="contact-item">
+                <div class="contact-icon">📱</div>
+                <h3>Phone</h3>
+                <a href="tel:+254741692497">+254 741 692 497</a>
+            </div>
+            
+            <div class="contact-item">
+                <div class="contact-icon">💻</div>
+                <h3>GitHub</h3>
+                <a href="https://github.com/IANCHEGE3636" target="_blank">IANCHEGE3636</a>
+            </div>
+            
+            <div class="contact-item">
+                <div class="contact-icon">🎓</div>
+                <h3>University</h3>
+                <p>KCA University<br>Class of 2026</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Ian Chege. All rights reserved. </p>
     </footer>
-    </html>
-        </body> 
+
+</body>
 </html>
